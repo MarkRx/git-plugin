@@ -78,6 +78,15 @@ public class BitbucketWebTest {
         assertEquals(BITBUCKET_URL + "/history/bar", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url1 = bitbucketWeb.getBranchLink("foo", "396fc230a3db05c427737aa5c2eb7856ba72b05d");
+        assertEquals(BITBUCKET_URL + "/src/foo", url1.toString());
+
+        URL url2 = bitbucketWeb.getBranchLink("feature/foo", "396fc230a3db05c427737aa5c2eb7856ba72b05d");
+        assertEquals(BITBUCKET_URL + "/src/396fc230a3db05c427737aa5c2eb7856ba72b05d?at=feature/foo", url2.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

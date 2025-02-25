@@ -9,6 +9,8 @@ import org.jenkinsci.plugins.gitclient.Git;
 import org.jenkinsci.plugins.gitclient.GitClient;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +154,12 @@ public class GitLabTest {
         assertEquals(expectedDefault, gitlabNaN.getFileLink(path).toString());
         assertEquals(expectedDefault, gitlabInfinity.getFileLink(path).toString());
 
+    }
+
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = gitlabDefault.getBranchLink("feature/foo", "fc029da233f161c65eb06d0f1ed4f36ae81d1f4f");
+        assertEquals(GITLAB_URL + "-/tree/feature/foo", url.toString());
     }
 
     private final Random random = new Random();

@@ -108,6 +108,19 @@ public abstract class GitRepositoryBrowser extends RepositoryBrowser<GitChangeSe
     }
 
     /**
+     * Determines the link to the given branch
+     *
+     * @param branch the branch. May come in as a short name (mybranch) or a full ref (refs/remotes/origin/mybranch)
+     * @param commit the commit. Required by some git implementations to build the branch URL
+     * @return a URL to the branch or null if not supported
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    public URL getBranchLink(String branch, String commit) throws IOException, URISyntaxException {
+        return null;
+    }
+
+    /**
      * Determines whether a URL should be normalized
 	 * Overridden in the rare case where it shouldn't
      *

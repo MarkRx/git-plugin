@@ -1,5 +1,6 @@
 package hudson.plugins.git.browser;
 
+import hudson.Functions;
 import hudson.plugins.git.GitChangeSet;
 import hudson.scm.EditType;
 import java.net.URL;
@@ -72,4 +73,9 @@ public class AssemblaWebTest {
         }
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL result = (new AssemblaWeb(repoUrl)).getBranchLink("feature/foo", "defcc790e89e2f2558d182028cbd4df6602bda2f");
+        assertEquals(repoUrl + "nodes/feature/foo", result.toString());
+    }
 }

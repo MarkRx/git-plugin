@@ -1,6 +1,7 @@
 package hudson.plugins.git.browser;
 
 import hudson.Extension;
+import hudson.Functions;
 import hudson.model.Descriptor;
 import hudson.plugins.git.GitChangeSet;
 import hudson.plugins.git.GitChangeSet.Path;
@@ -85,6 +86,18 @@ public class RhodeCode extends GitRepositoryBrowser {
             return encodeURL(new URL(url, url.getPath() + "files/" + parentCommit + '/' + path.getPath()));
         } else {
             return encodeURL(new URL(url, url.getPath() + "files/" + changeSet.getId() + '/' + path.getPath()));
+        }
+    }
+
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+
+        // Branch url is different if a '/' is in the ref
+        if (branch.contains("/")) {
+            return encodeURL(new URL(url, url.getPath() + "files/" + commit + "?at=" + branch));
+        } else {
+            return encodeURL(new URL(url, url.getPath() + "files/" + Functions.urlEncode(branch) + "?at=" + branch));
         }
     }
 

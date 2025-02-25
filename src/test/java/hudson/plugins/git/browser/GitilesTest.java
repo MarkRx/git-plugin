@@ -1,6 +1,9 @@
 package hudson.plugins.git.browser;
 
+import hudson.Functions;
 import hudson.plugins.git.GitChangeSet;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,6 +52,12 @@ public class GitilesTest {
             String msg = "Wrong link for path: " + path.getPath() + ", edit type: " + path.getEditType().getName();
             assertEquals(msg, expectedDiffLink, diffLink);
         }
+    }
+
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = new Gitiles(repoUrl).getBranchLink("feature/foo", "ce74b73295a727e537289bdd8ba4fd54d5fe074a");
+        assertEquals(repoUrl + "+/feature/foo", url.toString());
     }
 
     @Test

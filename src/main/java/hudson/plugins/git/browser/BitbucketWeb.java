@@ -73,6 +73,18 @@ public class BitbucketWeb extends GitRepositoryBrowser {
         return encodeURL(new URL(url, url.getPath() + "history/" + pathAsString));
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+
+        // Branch url is different if a '/' is in the ref
+        if (branch.contains("/")) {
+            return encodeURL(new URL(url, url.getPath() + "src/" + commit + "?at=" + branch));
+        } else {
+            return encodeURL(new URL(url, url.getPath() + "src/" + branch));
+        }
+    }
+
     @Extension
     @Symbol("bitbucket")
     public static class BitbucketWebDescriptor extends Descriptor<RepositoryBrowser<?>> {

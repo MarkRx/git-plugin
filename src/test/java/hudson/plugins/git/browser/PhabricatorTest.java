@@ -50,4 +50,9 @@ public class PhabricatorTest {
         }
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = phabricator.getBranchLink("feature/foo", "defcc790e89e2f2558d182028cbd4df6602bda2f");
+        assertEquals(repoUrl + "browse/feature/foo", url.toString());
+    }
 }

@@ -66,6 +66,15 @@ public class RhodeCodeTest {
         assertEquals(RHODECODE_URL + "/files/b547aa10c3f06710c6fdfcdb2a9149c81662923b/bar", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url1 = rhodecode.getBranchLink("foo", "396fc230a3db05c427737aa5c2eb7856ba72b05d");
+        assertEquals(RHODECODE_URL + "/files/foo?at=foo", url1.toString());
+
+        URL url2 = rhodecode.getBranchLink("feature/foo", "396fc230a3db05c427737aa5c2eb7856ba72b05d");
+        assertEquals(RHODECODE_URL + "/files/396fc230a3db05c427737aa5c2eb7856ba72b05d?at=feature/foo", url2.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

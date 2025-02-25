@@ -454,6 +454,17 @@ public class BuildDataTest {
     }
 
     @Test
+    public void testScrubBranchRef() {
+        assertEquals("main", BuildData.scrubBranchRef("main"));
+        assertEquals("feature/foo", BuildData.scrubBranchRef("feature/foo"));
+
+        assertEquals("main", BuildData.scrubBranchRef("refs/remotes/origin/main"));
+        assertEquals("feature/foo", BuildData.scrubBranchRef("refs/remotes/origin/feature/foo"));
+
+        assertEquals("feature/foo", BuildData.scrubBranchRef("refs/remotes/myremote/feature/foo"));
+    }
+
+    @Test
     public void testClone() {
         // Tested in testSimilarTo and testEquals
     }

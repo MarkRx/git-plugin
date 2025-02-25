@@ -78,4 +78,10 @@ public class StashTest {
             assertEquals(msg, expectedFileLink, fileLink);
         }
     }
+
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = new Stash(repoUrl).getBranchLink("feature/foo", "defcc790e89e2f2558d182028cbd4df6602bda2f");
+        assertEquals(repoUrl + "browse?at=feature/foo", url.toString());
+    }
 }

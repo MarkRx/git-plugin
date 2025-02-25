@@ -83,6 +83,12 @@ public class Phabricator extends GitRepositoryBrowser {
         return encodeURL(new URL(getUrl(), spec));
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "browse/" + branch));
+    }
+
     @Extension
     @Symbol("phabricator")
     public static class PhabricatorDescriptor extends Descriptor<RepositoryBrowser<?>> {

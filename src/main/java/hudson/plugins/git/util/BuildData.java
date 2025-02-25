@@ -19,6 +19,8 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import hudson.plugins.git.browser.GitRepositoryBrowser;
 import org.eclipse.jgit.lib.ObjectId;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -83,6 +85,8 @@ public class BuildData implements Action, Serializable, Cloneable {
     @CheckForNull
     private Integer index;
 
+    private GitRepositoryBrowser browser;
+
     public BuildData() {
     }
 
@@ -91,10 +95,15 @@ public class BuildData implements Action, Serializable, Cloneable {
     }
 
     public BuildData(String scmName, Collection<UserRemoteConfig> remoteConfigs) {
+        this(scmName, remoteConfigs, null);
+    }
+
+    public BuildData(String scmName, Collection<UserRemoteConfig> remoteConfigs, GitRepositoryBrowser browser) {
         this.scmName = scmName;
         for(UserRemoteConfig c : remoteConfigs) {
             remoteUrls.add(c.getUrl());
         }
+        this.browser = browser;
     }
 
     /**
@@ -297,6 +306,14 @@ public class BuildData implements Action, Serializable, Cloneable {
         return remoteUrls.contains(remoteUrl);
     }
 
+    public GitRepositoryBrowser getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(GitRepositoryBrowser browser) {
+        this.browser = browser;
+    }
+
     @Override
     public BuildData clone() {
         BuildData clone;
@@ -438,4 +455,19 @@ public class BuildData implements Action, Serializable, Cloneable {
 
     /* Package protected for easier testing */
     static final Logger LOGGER = Logger.getLogger(BuildData.class.getName());
+
+    /**
+     * Removes <code>refs/remotes/REMOTE/</code> from the branch ref
+     *
+     * @param branch the raw git branch
+     * @return
+     */
+    public static String scrubBranchRef(String branch) {
+        if (branch != null && branch.startsWith("refs/remotes/") && branch.length() >= 14) {
+            String tmp = branch.substring(14);
+            return tmp.substring(tmp.indexOf('/') + 1);
+        } else {
+            return branch;
+        }
+    }
 }

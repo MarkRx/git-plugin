@@ -19,7 +19,18 @@
         <ul>
         <j:forEach var="branch" items="${it.lastBuiltRevision.branches}">
           <j:if test="${branch!=''}">
-            <li>${branch.name}</li>
+            <li>
+				<j:if test="${it.browser!=null}">
+					<j:set var="blink" value="${it.browser.getBranchLink(it.scrubBranchRef(branch.name), it.lastBuiltRevision.sha1.name())}"/>
+				</j:if>
+
+				<j:if test="${blink!=null}">
+					<a href="${blink}">${branch.name}</a>
+				</j:if>
+				<j:if test="${blink==null}">
+					${branch.name}
+				</j:if>
+			</li>
           </j:if>
         </j:forEach>
         </ul>

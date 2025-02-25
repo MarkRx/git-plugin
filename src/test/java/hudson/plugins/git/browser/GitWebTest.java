@@ -58,6 +58,12 @@ public class GitWebTest {
         assertEquals(GITWEB_URL + "&a=blob&f=bar&h=257cc5642cb1a054f08cc83f2d943e56fd3ebe99&hb=fc029da233f161c65eb06d0f1ed4f36ae81d1f4f", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = gitwebWeb.getBranchLink("feature/foo", "257cc5642cb1a054f08cc83f2d943e56fd3ebe99");
+        assertEquals(GITWEB_URL + "&a=tree&h=feature/foo&hb=feature/foo", url.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

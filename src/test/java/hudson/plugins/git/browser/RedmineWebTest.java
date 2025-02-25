@@ -70,6 +70,12 @@ public class RedmineWebTest {
         assertEquals(REDMINE_URL + "/revisions/fc029da233f161c65eb06d0f1ed4f36ae81d1f4f/diff/bar", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = redmineWeb.getBranchLink("feature/foo", "fc029da233f161c65eb06d0f1ed4f36ae81d1f4f");
+        assertEquals(REDMINE_URL + "/?rev=feature/foo", url.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

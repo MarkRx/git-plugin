@@ -86,6 +86,12 @@ public class RedmineWeb extends GitRepositoryBrowser {
         }
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "?rev=" + branch));
+    }
+
     @Extension
     @Symbol("redmine")
     public static class RedmineWebDescriptor extends Descriptor<RepositoryBrowser<?>> {

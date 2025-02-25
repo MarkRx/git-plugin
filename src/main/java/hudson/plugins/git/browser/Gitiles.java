@@ -62,6 +62,12 @@ public class Gitiles extends GitRepositoryBrowser {
         return new URL(url + "+/" + changeSet.getId() + "%5E%21");
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "+/" + branch));
+    }
+
 
     @Extension
     @Symbol("gitiles")

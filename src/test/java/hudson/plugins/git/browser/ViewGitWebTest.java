@@ -80,6 +80,12 @@ public class ViewGitWebTest {
         assertEquals(VIEWGIT_URL + "/?p=PROJECT&a=commitdiff&h=fc029da233f161c65eb06d0f1ed4f36ae81d1f4f#bar", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = viewGitWeb.getBranchLink("feature/foo", "257cc5642cb1a054f08cc83f2d943e56fd3ebe99");
+        assertEquals(VIEWGIT_URL + "/?p=PROJECT&a=tree&h=feature/foo&hb=feature/foo", url.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

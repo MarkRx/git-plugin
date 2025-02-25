@@ -74,6 +74,12 @@ public class ViewGitWeb extends GitRepositoryBrowser {
         return new URL(url, url.getPath() + param(url).add("p=" + projectName).add("a=commit").add("h=" + changeSet.getId()));
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + param(url).add("p=" + projectName).add("a=tree").add("h=" + branch).add("hb=" + branch)));
+    }
+
     private QueryBuilder param(URL url) {
         return new QueryBuilder(url.getQuery());
     }

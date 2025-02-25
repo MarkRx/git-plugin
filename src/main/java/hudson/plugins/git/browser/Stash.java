@@ -88,6 +88,12 @@ public class Stash extends GitRepositoryBrowser {
         }
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "browse?at=" + branch));
+    }
+
     @Extension
     // @Symbol("stash") // Intentionally not providing a symbol named 'stash', would collide with existing 'stash' Pipeline step
     public static class StashDescriptor extends Descriptor<RepositoryBrowser<?>> {

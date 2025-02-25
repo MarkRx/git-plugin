@@ -93,6 +93,12 @@ public class GogsGit extends GitRepositoryBrowser {
         }
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "src/" + branch));
+    }
+
     @Extension
     @Symbol("gogs")
     public static class GogsGitDescriptor extends Descriptor<RepositoryBrowser<?>> {

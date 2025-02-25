@@ -70,6 +70,12 @@ public class GogsGitTest {
         assertEquals(GOGS_URL + "/commit/fc029da233f161c65eb06d0f1ed4f36ae81d1f4f#diff-1", String.valueOf(fileLink));
     }
 
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = GogsGit.getBranchLink("feature/foo", "fc029da233f161c65eb06d0f1ed4f36ae81d1f4f");
+        assertEquals(GOGS_URL + "/src/feature/foo", url.toString());
+    }
+
     private final Random random = new Random();
 
     private GitChangeSet createChangeSet(String rawchangelogpath) throws Exception {

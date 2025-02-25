@@ -89,6 +89,12 @@ public class AssemblaWeb extends GitRepositoryBrowser {
         }
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "nodes/" + branch));
+    }
+
     @Extension
     @Symbol("assembla")
     public static class AssemblaWebDescriptor extends Descriptor<RepositoryBrowser<?>> {

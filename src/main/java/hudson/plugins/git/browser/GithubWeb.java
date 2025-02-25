@@ -86,6 +86,12 @@ public class GithubWeb extends GitRepositoryBrowser {
         }
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "tree/" + branch));
+    }
+
     private URL buildURL(String spec) throws IOException {
         URL url = getUrl();
         return new URL(url, url.getPath() + spec);

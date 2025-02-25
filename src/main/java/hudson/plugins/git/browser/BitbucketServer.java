@@ -73,6 +73,12 @@ public class BitbucketServer extends GitRepositoryBrowser {
         return encodeURL(new URL(url, url.getPath() + "browse/" + pathAsString));
     }
 
+    @Override
+    public URL getBranchLink(String branch, String commit) throws IOException {
+        URL url = getUrl();
+        return encodeURL(new URL(url, url.getPath() + "browse?at=" + branch));
+    }
+
     @Extension @Symbol("bitbucketServer")
     public static class BitbucketServerDescriptor extends Descriptor<RepositoryBrowser<?>> {
         @NonNull

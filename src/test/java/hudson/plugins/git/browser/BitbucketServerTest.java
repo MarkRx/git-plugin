@@ -5,6 +5,7 @@
 package hudson.plugins.git.browser;
 
 import hudson.EnvVars;
+import hudson.Functions;
 import hudson.model.TaskListener;
 import hudson.plugins.git.GitChangeLogParser;
 import hudson.plugins.git.GitChangeSet;
@@ -75,6 +76,12 @@ public class BitbucketServerTest {
         final Path path = pathMap.get("bar");
         final URL fileLink = bitbucketServer.getFileLink(path);
         assertEquals(BITBUCKET_URL + "/browse/bar", String.valueOf(fileLink));
+    }
+
+    @Test
+    public void testGetBranchLink() throws Exception {
+        URL url = bitbucketServer.getBranchLink("feature/foo", "396fc230a3db05c427737aa5c2eb7856ba72b05d");
+        assertEquals(BITBUCKET_URL + "/browse?at=feature/foo", url.toString());
     }
 
     private final Random random = new Random();

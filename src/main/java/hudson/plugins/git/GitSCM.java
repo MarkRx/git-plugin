@@ -962,7 +962,7 @@ public class GitSCM extends GitSCMBackwardCompatibility {
     private BuildData fixNull(BuildData bd) {
         ScmName sn = getExtensions().get(ScmName.class);
         String scmName = sn == null ? null : sn.getName();
-        return bd != null ? bd : new BuildData(scmName, getUserRemoteConfigs());
+        return bd != null ? bd : new BuildData(scmName, getUserRemoteConfigs(), bd.getBrowser());
     }
 
     /**
@@ -2008,11 +2008,19 @@ public class GitSCM extends GitSCMBackwardCompatibility {
         BuildData base = getBuildData(build);
         ScmName sn = getExtensions().get(ScmName.class);
         String scmName = sn == null ? null : sn.getName();
+
+        GitRepositoryBrowser effectiveBrowser = null;
+        RepositoryBrowser rawEffectiveBrowser = getEffectiveBrowser();
+        if (rawEffectiveBrowser instanceof GitRepositoryBrowser) {
+            effectiveBrowser = (GitRepositoryBrowser)getEffectiveBrowser();
+        }
+
         if (base==null)
-            return new BuildData(scmName, getUserRemoteConfigs());
+            return new BuildData(scmName, getUserRemoteConfigs(), effectiveBrowser);
         else {
            BuildData buildData = base.clone();
            buildData.setScmName(scmName);
+           buildData.setBrowser(effectiveBrowser);
            return buildData;
         }
     }
